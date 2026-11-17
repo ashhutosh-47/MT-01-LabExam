@@ -44,7 +44,6 @@ function validateFood(food) {
     if (!food || typeof food !== 'object' || Array.isArray(food)) {
         return 'Food details must be a valid JSON object';
     }
-
     const missingFields = requiredFields.filter(
         field => !Object.prototype.hasOwnProperty.call(food, field)
     );
@@ -52,7 +51,6 @@ function validateFood(food) {
     if (missingFields.length > 0) {
         return `Missing required fields: ${missingFields.join(', ')}`;
     }
-
     if (!Number.isInteger(food.id) || food.id <= 0) {
         return 'ID must be a positive integer';
     }
@@ -60,11 +58,9 @@ function validateFood(food) {
     if (typeof food.foodName !== 'string' || !food.foodName.trim()) {
         return 'Food name is required';
     }
-
     if (typeof food.category !== 'string' || !food.category.trim()) {
         return 'Category is required';
     }
-
     if (typeof food.price !== 'number' ||
         !Number.isFinite(food.price) || food.price <= 0) {
         return 'Price must be a positive number';
@@ -154,9 +150,7 @@ app.put('/foods/:id', (req, res) => {
     if (error) {
         return res.status(400).json({ message: error });
     }
-
     foods[index] = updatedFood;
-
     res.status(200).json({
         message: 'Food item updated successfully',
         food: updatedFood
@@ -176,7 +170,6 @@ app.delete('/foods/:id', (req, res) => {
     }
 
     const deletedFood = foods.splice(index, 1)[0];
-
     res.status(200).json({
         message: 'Food item deleted successfully',
         food: deletedFood
@@ -190,10 +183,8 @@ app.use((err, req, res, next) => {
             message: 'Invalid JSON format'
         });
     }
-
     next(err);
 });
-
 // Handle invalid routes
 app.use((req, res) => {
     res.status(404).json({
